@@ -19,14 +19,25 @@ public class q2 {
         return false;
     }
 
-    public static Point[] shareTwoPoints(Edge edge){
-        Point p = edge.p;
-        Point q = edge.q;
-        Object[] pEdges = p.edges.toArray();
-        for(Object e : p.edges.toArray()){
-            System.out.println(e.toString());
+    public static ArrayList<Point[]> shareTwoPoints(Edge edge){
+        int count = 0;
+        ArrayList<Point[]> sol = new ArrayList<Point[]>();
+        Point[] pair = new Point[2];
+        for(Edge eP : edge.p.edges){
+            Point otherPointP = eP.getOtherPoint(edge.p);
+            for(Edge eQ : edge.q.edges){
+                Point otherPointQ = eQ.getOtherPoint(edge.q);
+                if(otherPointP.x == otherPointQ.x && otherPointP.y == otherPointQ.y){
+                    pair[count] = otherPointP;
+                    count++;
+                    if(count == 2){
+                        count = 0;
+                        sol.add(pair);
+                    }
+                }
+            }
         }
-        return null;
+        return sol;
     }
 
     public static int delaunayFlip(Point[] points, ArrayList<Edge> edges){
@@ -36,11 +47,17 @@ public class q2 {
             isNotOptimal = false;
             for(Edge e : edges){
                 // 1. Do p and q share 2 common points (a and b)
-                if(shareTwoPoints(e) == null){
-                    System.out.println("Null");
+                ArrayList<Point[]> twoPointPairs = shareTwoPoints(e);
+                if(twoPointPairs.size() > 0){
+                    // 2. Does edge a-b intersect p-q
+                    for(Point[] twoPoints :  twoPointPairs) {
+                        Edge edgeAB = new Edge(twoPoints[0], twoPoints[1]);
+                        System.out.println(e.toString());
+                        System.out.println(edgeAB.toString());
+                        System.out.println("-------");
+                    }
+                    // 3. Do angles a and b sum over 180 degrees
                 }
-                // 2. Does edge a-b intersect p-q
-                // 3. Do angles a and b sum over 180 degrees
             }
             flips++;
         } while(isNotOptimal);
@@ -113,7 +130,6 @@ public class q2 {
 
         // Set of edges attached to this point
         public ArrayList<Edge> edges;
-
         public Point(double bx,double by) { x = bx; y = by; }
 
         // Returns true if the given point is the same as this one.
@@ -139,6 +155,7 @@ public class q2 {
             p=p1;
             q=p2;
         }
+
         // Utility routine -- 2d cross-product (signed area of a triangle) test for orientation.
         public int sat(double p0x,double p0y,double p1x,double p1y,double p2x,double p2y) {
             double d = (p1x-p0x)*(p2y-p0y)-(p2x-p0x)*(p1y-p0y);
@@ -156,6 +173,14 @@ public class q2 {
             s2 = sat(e.p.x,e.p.y, e.q.x,e.q.y, q.x,q.y);
             if (s1==s2 || (s1==0 && s2!=0) || (s2==0 && s1!=0)) return false;
             return true;
+        }
+
+        public Point getOtherPoint(Point point){
+            if(p.x == point.x && p.y == point.y){
+                return q;
+            } else {
+                return p;
+            }
         }
 
         public String toString() {
