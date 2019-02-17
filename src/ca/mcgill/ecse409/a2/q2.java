@@ -40,6 +40,16 @@ public class q2 {
         return sol;
     }
 
+    public static double getAngle(Point a, Point b, Point c){
+        double angle1 = Math.atan2(b.y - a.y, b.x - a.x) * (180.0/3.14);
+        double angle2 = Math.atan2(b.y - c.y, b.x - c.x) * (180.0/3.14);
+        if(Math.abs(angle1-angle2) > Math.abs(180.0)){
+            return 360.0 - Math.abs(angle1-angle2);
+        }else{
+            return Math.abs(angle1-angle2);
+        }
+    }
+
     public static int delaunayFlip(Point[] points, ArrayList<Edge> edges){
         boolean isNotOptimal;
         int flips = 0;
@@ -52,14 +62,26 @@ public class q2 {
                     // 2. Does edge a-b intersect p-q
                     for(Point[] twoPoints :  twoPointPairs) {
                         Edge edgeAB = new Edge(twoPoints[0], twoPoints[1]);
-                        System.out.println(e.toString());
-                        System.out.println(edgeAB.toString());
-                        System.out.println("-------");
+                        Edge edgePQ = null;
+                        int check = 0;
+                        for(Edge checkEdge : edges){
+                            if(checkEdge.compare(edgeAB)){ check += 2; }
+                            if(checkEdge.intersects(edgeAB)){ edgePQ = checkEdge; check += 1; }
+                        }
+                        if(check == 1){
+                            if(getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q) > 180.0){
+                                edges.remove(edgePQ);
+                                edges.add(edgeAB);
+                                flips++;
+                                System.out.println(edgeAB.toString());
+                                System.out.println("-------------");
+                            }else{
+                                System.out.println(getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q));
+                            }
+                        }
                     }
-                    // 3. Do angles a and b sum over 180 degrees
                 }
             }
-            flips++;
         } while(isNotOptimal);
         return flips;
     }
@@ -181,6 +203,15 @@ public class q2 {
             } else {
                 return p;
             }
+        }
+
+        public boolean compare(Edge e){
+            if(e.p.x == p.x && e.p.y == p.y && e.q.x == q.x && e.q.y == q.y){
+                return true;
+            } else if(e.q.x == p.x && e.q.y == p.y && e.p.x == q.x && e.p.y == q.y){
+                return true;
+            }
+            return false;
         }
 
         public String toString() {
