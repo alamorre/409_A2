@@ -19,25 +19,30 @@ public class q2 {
         return false;
     }
 
-    public static ArrayList<Point[]> shareTwoPoints(Edge edge){
-        int count = 0;
-        ArrayList<Point[]> sol = new ArrayList<Point[]>();
-        Point[] pair = new Point[2];
+    public static ArrayList<Edge> sharePointEdges(Edge edge){
+
+        ArrayList<Point> points = new ArrayList<Point>();
+        ArrayList<Edge> newEdges = new ArrayList<Edge>();
+
         for(Edge eP : edge.p.edges){
             Point otherPointP = eP.getOtherPoint(edge.p);
             for(Edge eQ : edge.q.edges){
                 Point otherPointQ = eQ.getOtherPoint(edge.q);
                 if(otherPointP.x == otherPointQ.x && otherPointP.y == otherPointQ.y){
-                    pair[count] = otherPointP;
-                    count++;
-                    if(count == 2){
-                        count = 0;
-                        sol.add(pair);
-                    }
+                    points.add(otherPointP);
                 }
             }
         }
-        return sol;
+
+        for(int i = 0; i < points.size(); i++){
+            for(int j = i; j < points.size(); j++){
+                if(i != j){
+                    newEdges.add( new Edge(points.get(i), points.get(j)) );
+                }
+            }
+        }
+
+        return newEdges;
     }
 
     public static double getAngle(Point a, Point b, Point c){
@@ -59,11 +64,10 @@ public class q2 {
             ArrayList<Edge> flipArr = new ArrayList<Edge>();
             for(Edge e : edges){
                 // 1. Do p and q share 2 common points (a and b)
-                ArrayList<Point[]> twoPointPairs = shareTwoPoints(e);
-                if(twoPointPairs.size() > 0){
+                ArrayList<Edge> twoPointEdges = sharePointEdges(e);
+                if(twoPointEdges.size() > 0){
                     // 2. Does edge a-b intersect p-q
-                    for(Point[] twoPoints :  twoPointPairs) {
-                        Edge edgeAB = new Edge(twoPoints[0], twoPoints[1]);
+                    for(Edge edgeAB :  twoPointEdges) {
                         Edge edgePQ = null;
                         int check = 0;
                         for(Edge checkEdge : edges){
@@ -75,8 +79,8 @@ public class q2 {
                                 removeArr.add(edgePQ);
                                 flipArr.add(edgeAB);
                                 flips++;
-                            }else{
-                                System.out.println(getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q));
+                                isNotOptimal = true;
+                                System.out.println("Flipped: " + edgeAB.toString());
                             }
                         }
                     }
@@ -87,6 +91,8 @@ public class q2 {
                 edges.remove(r);
             }
             for(Edge f : flipArr){
+                f.p.addEdge(f);
+                f.q.addEdge(f);
                 edges.add(f);
             }
         } while(isNotOptimal);

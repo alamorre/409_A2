@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b44b2dcb-9a25-4e57-8298-e17a16d78995" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2$Edge.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2$Edge.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2$Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2$Point.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ca/mcgill/ecse409/a2/q2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/mcgill/ecse409/a2/q2.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -53,12 +56,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="5377" />
+          <entry key="java" value="5789" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="5377" />
+          <entry key="JAVA" value="5789" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -87,23 +90,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ca/mcgill/ecse409/a2/q2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="83" column="13" lean-forward="true" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
+            <state relative-caret-position="193">
+              <caret line="82" column="84" lean-forward="true" selection-start-line="82" selection-start-column="84" selection-end-line="82" selection-end-column="84" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#233#239#0" expanded="true" />
-                <element signature="e#1862#1868#0" expanded="true" />
-                <element signature="e#1922#1928#0" expanded="true" />
+                <element signature="e#640#647#0" expanded="true" />
+                <element signature="e#702#708#0" expanded="true" />
+                <element signature="e#1865#1871#0" expanded="true" />
+                <element signature="e#1926#1932#0" expanded="true" />
+                <element signature="e#6372#6373#0" expanded="true" />
+                <element signature="e#6418#6419#0" expanded="true" />
+                <element signature="e#7985#7986#0" expanded="true" />
+                <element signature="e#8031#8032#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home/src.zip!/java/util/ArrayList.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="850" selection-start-line="850" selection-end-line="850" />
             </state>
           </provider>
         </entry>
@@ -130,10 +130,10 @@
       <find>compare</find>
       <find>224575488195071,0.34725406334296527),(0.7675544925929538,0.25860307736</find>
       <find>t</find>
-      <find>t</find>
-      <find>t</find>
       <find>threa</find>
       <find>delaunayFlip</find>
+      <find>0.0,0.0),(1.0,1.0</find>
+      <find>same</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -240,7 +240,7 @@
   <component name="RunManager">
     <configuration name="q2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ca.mcgill.ecse409.a2.q2" />
-      <option name="PROGRAM_PARAMETERS" value="10 1 99" />
+      <option name="PROGRAM_PARAMETERS" value="7 1 90" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="ca.mcgill.ecse409.a2.*" />
@@ -328,13 +328,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ca/mcgill/ecse409/a2/q2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="83" column="13" lean-forward="true" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
+        <state relative-caret-position="193">
+          <caret line="82" column="84" lean-forward="true" selection-start-line="82" selection-start-column="84" selection-end-line="82" selection-end-column="84" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#233#239#0" expanded="true" />
-            <element signature="e#1862#1868#0" expanded="true" />
-            <element signature="e#1922#1928#0" expanded="true" />
+            <element signature="e#640#647#0" expanded="true" />
+            <element signature="e#702#708#0" expanded="true" />
+            <element signature="e#1865#1871#0" expanded="true" />
+            <element signature="e#1926#1932#0" expanded="true" />
+            <element signature="e#6372#6373#0" expanded="true" />
+            <element signature="e#6418#6419#0" expanded="true" />
+            <element signature="e#7985#7986#0" expanded="true" />
+            <element signature="e#8031#8032#0" expanded="true" />
           </folding>
         </state>
       </provider>
