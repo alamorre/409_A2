@@ -4,6 +4,8 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.TimeUnit;
 
 public class q2 {
@@ -172,8 +174,12 @@ public class q2 {
         }
     }
 
+    /**
+     * This is the class for Edge
+     * */
     public static class Edge {
         Point p,q;
+        Lock lock = new ReentrantLock();
 
         public Edge(Point p1,Point p2) {
             p=p1;
@@ -219,6 +225,9 @@ public class q2 {
         public String toString() {
             return "<"+p+","+q+">";
         }
+
+        public boolean tryLock(){ return lock.tryLock(); }
+        public void setUnlock(){ lock.unlock(); }
     }
 
     /**
@@ -233,53 +242,52 @@ public class q2 {
 
         @Override
         public void run() {
-            try {
-                boolean isNotOptimal;
-                do {
-                    isNotOptimal = false;
-                    for (int i = 0; i < edges.size(); i++) {
-                        Edge e = edges.get(i);
-                        // 1. Do p and q share 2 common points (a and b)
-                        ArrayList<Edge> twoPointEdges = sharePointEdges(e);
-                        if (twoPointEdges.size() > 0) {
-                            // 2. Does edge a-b intersect p-q
-                            for (Edge edgeAB : twoPointEdges) {
-                                Edge edgePQ = null;
-                                int check = 0;
-                                for (int j = 0; j < edges.size(); j++) {
-                                    Edge checkEdge = edges.get(j);
-                                    if (checkEdge.compare(edgeAB)) {
-                                        check += 2;
-                                    }
-                                    if (checkEdge.intersects(edgeAB)) {
-                                        if (checkEdge.compare(e)) {
-                                            edgePQ = checkEdge;
-                                            check += 1;
-                                        } else {
-                                            check += 2;
-                                        }
-                                    }
+            boolean isNotOptimal;
+            do {
+                isNotOptimal = false;
+                for (int i = 0; i < edges.size(); i++) {
+                    Edge e = edges.get(i);
+                    if(!e.tryLock()){ isNotOptimal = true; continue; }
+                    // 1. Do p and q share 2 common points (a and b)
+                    ArrayList<Edge> twoPointEdges = sharePointEdges(e);
+                    if (twoPointEdges.size() == 0) { e.setUnlock(); continue; }
+                    // 2. Does edge a-b intersect p-q
+                    for (Edge edgeAB : twoPointEdges) {
+                        Edge edgePQ = null;
+                        boolean checked = false;
+                        for (int j = 0; j < edges.size(); j++) {
+                            Edge checkEdge = edges.get(j);
+                            if(!checkEdge.tryLock()){ isNotOptimal = true; continue; }
+                            if (checkEdge.intersects(edgeAB)) {
+                                if (checkEdge.compare(e)) {
+                                    edgePQ = checkEdge;
+                                    checked = true;
+                                } else {
+                                    checked = false;
                                 }
-                                if (check == 1) {
-                                    if (getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q) > 180.0) {
-                                        edgePQ.p.removeEdge(edgePQ);
-                                        edgePQ.q.removeEdge(edgePQ);
-                                        edges.remove(edgePQ);
-                                        edgeAB.p.addEdge(edgeAB);
-                                        edgeAB.q.addEdge(edgeAB);
-                                        edges.add(edgeAB);
-                                        flips.plus();
-                                        isNotOptimal = true;
-                                        System.out.println("flip");
-                                    }
-                                }
+                            }
+                            if (checkEdge.compare(edgeAB)) {
+                                checked = false;
+                            }
+                            checkEdge.setUnlock();
+                        }
+                        if (checked) {
+                            if (getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q) > 180.0) {
+                                edgePQ.p.removeEdge(edgePQ);
+                                edgePQ.q.removeEdge(edgePQ);
+                                edges.remove(edgePQ);
+                                edgeAB.p.addEdge(edgeAB);
+                                edgeAB.q.addEdge(edgeAB);
+                                edges.add(edgeAB);
+                                flips.plus();
+                                isNotOptimal = true;
+                                System.out.println("Flip " + edgePQ.toString() + " with " + edgeAB.toString());
                             }
                         }
                     }
-                } while (isNotOptimal);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+                    e.setUnlock();
+                }
+            } while (isNotOptimal);
         }
     }
 }
