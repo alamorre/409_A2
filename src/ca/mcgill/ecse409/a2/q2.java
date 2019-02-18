@@ -59,10 +59,12 @@ public class q2 {
         boolean isNotOptimal;
         int flips = 0;
         do {
+            System.out.println("------START----------");
             isNotOptimal = false;
             ArrayList<Edge> removeArr = new ArrayList<Edge>();
             ArrayList<Edge> flipArr = new ArrayList<Edge>();
             for(Edge e : edges){
+                System.out.println("Edge: "  +  e.toString());
                 // 1. Do p and q share 2 common points (a and b)
                 ArrayList<Edge> twoPointEdges = sharePointEdges(e);
                 if(twoPointEdges.size() > 0){
@@ -72,7 +74,14 @@ public class q2 {
                         int check = 0;
                         for(Edge checkEdge : edges){
                             if(checkEdge.compare(edgeAB)){ check += 2; }
-                            if(checkEdge.intersects(edgeAB)){ edgePQ = checkEdge; check += 1; }
+                            if(checkEdge.intersects(edgeAB)){
+                                if(checkEdge.compare(e)){
+                                    edgePQ = checkEdge;
+                                    check += 1;
+                                } else {
+                                    check += 2;
+                                }
+                            }
                         }
                         if(check == 1){
                             if(getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q) > 180.0){
@@ -81,6 +90,8 @@ public class q2 {
                                 flips++;
                                 isNotOptimal = true;
                                 System.out.println("Flipped: " + edgeAB.toString());
+                                System.out.println("Caused By: " + edgePQ.toString());
+                                System.out.println("----------");
                             }
                         }
                     }
@@ -88,6 +99,8 @@ public class q2 {
             }
             // Remove the edges captures in Delaunay
             for(Edge r : removeArr){
+                r.p.removeEdge(r);
+                r.q.removeEdge(r);
                 edges.remove(r);
             }
             for(Edge f : flipArr){
@@ -176,6 +189,11 @@ public class q2 {
             if (edges==null) edges = new ArrayList<Edge>();
             if (!edges.contains(e))
                 edges.add(e);
+        }
+
+        // Remove an edge connection if present
+        public void removeEdge(Edge e) {
+            edges.remove(e);
         }
 
         public String toString() {
