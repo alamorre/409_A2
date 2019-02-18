@@ -59,54 +59,44 @@ public class q2 {
         boolean isNotOptimal;
         int flips = 0;
         do {
-            System.out.println("------START----------");
             isNotOptimal = false;
-            ArrayList<Edge> removeArr = new ArrayList<Edge>();
-            ArrayList<Edge> flipArr = new ArrayList<Edge>();
-            for(Edge e : edges){
-                System.out.println("Edge: "  +  e.toString());
-                // 1. Do p and q share 2 common points (a and b)
-                ArrayList<Edge> twoPointEdges = sharePointEdges(e);
-                if(twoPointEdges.size() > 0){
-                    // 2. Does edge a-b intersect p-q
-                    for(Edge edgeAB :  twoPointEdges) {
-                        Edge edgePQ = null;
-                        int check = 0;
-                        for(Edge checkEdge : edges){
-                            if(checkEdge.compare(edgeAB)){ check += 2; }
-                            if(checkEdge.intersects(edgeAB)){
-                                if(checkEdge.compare(e)){
-                                    edgePQ = checkEdge;
-                                    check += 1;
-                                } else {
-                                    check += 2;
+            for(int i = 0; i < edges.size(); i++){
+                Edge e = edges.get(i);
+                synchronized(e) {
+                    // 1. Do p and q share 2 common points (a and b)
+                    ArrayList<Edge> twoPointEdges = sharePointEdges(e);
+                    if (twoPointEdges.size() > 0) {
+                        // 2. Does edge a-b intersect p-q
+                        for (Edge edgeAB : twoPointEdges) {
+                            Edge edgePQ = null;
+                            int check = 0;
+                            for (int j = 0; j < edges.size(); j++) {
+                                Edge checkEdge = edges.get(j);
+                                synchronized (checkEdge){
+                                    if (checkEdge.compare(edgeAB)) {
+                                        check += 2;
+                                    }
+                                    if (checkEdge.intersects(edgeAB)) {
+                                        if (checkEdge.compare(e)) {
+                                            edgePQ = checkEdge;
+                                            check += 1;
+                                        } else {
+                                            check += 2;
+                                        }
+                                    }
                                 }
                             }
-                        }
-                        if(check == 1){
-                            if(getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q) > 180.0){
-                                removeArr.add(edgePQ);
-                                flipArr.add(edgeAB);
-                                flips++;
-                                isNotOptimal = true;
-                                System.out.println("Flipped: " + edgeAB.toString());
-                                System.out.println("Caused By: " + edgePQ.toString());
-                                System.out.println("----------");
+                            if (check == 1) {
+                                if (getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q) > 180.0) {
+                                    edgePQ.p.removeEdge(edgePQ); edgePQ.q.removeEdge(edgePQ); edges.remove(edgePQ);
+                                    edgeAB.p.addEdge(edgeAB); edgeAB.q.addEdge(edgeAB); edges.add(edgeAB);
+                                    flips++;
+                                    isNotOptimal = true;
+                                }
                             }
                         }
                     }
                 }
-            }
-            // Remove the edges captures in Delaunay
-            for(Edge r : removeArr){
-                r.p.removeEdge(r);
-                r.q.removeEdge(r);
-                edges.remove(r);
-            }
-            for(Edge f : flipArr){
-                f.p.addEdge(f);
-                f.q.addEdge(f);
-                edges.add(f);
             }
         } while(isNotOptimal);
         return flips;

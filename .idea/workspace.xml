@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b44b2dcb-9a25-4e57-8298-e17a16d78995" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2$Edge.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2$Edge.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2$Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2$Point.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment2/ca/mcgill/ecse409/a2/q2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ca/mcgill/ecse409/a2/q2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ca/mcgill/ecse409/a2/q2.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -56,12 +52,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="6050" />
+          <entry key="java" value="6204" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="6050" />
+          <entry key="JAVA" value="6204" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -90,15 +86,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ca/mcgill/ecse409/a2/q2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="61" column="23" selection-start-line="61" selection-end-line="62" />
+            <state relative-caret-position="118">
+              <caret line="55" column="5" lean-forward="true" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#233#239#0" expanded="true" />
-                <element signature="e#640#647#0" expanded="true" />
-                <element signature="e#702#708#0" expanded="true" />
-                <element signature="e#1865#1871#0" expanded="true" />
-                <element signature="e#1926#1932#0" expanded="true" />
+                <element signature="e#612#619#0" expanded="true" />
+                <element signature="e#671#677#0" expanded="true" />
                 <element signature="e#6788#6789#0" expanded="true" />
                 <element signature="e#6825#6826#0" expanded="true" />
                 <element signature="e#6372#6373#0" expanded="true" />
@@ -292,7 +286,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32891566" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -337,15 +331,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ca/mcgill/ecse409/a2/q2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="61" column="23" selection-start-line="61" selection-end-line="62" />
+        <state relative-caret-position="118">
+          <caret line="55" column="5" lean-forward="true" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#233#239#0" expanded="true" />
-            <element signature="e#640#647#0" expanded="true" />
-            <element signature="e#702#708#0" expanded="true" />
-            <element signature="e#1865#1871#0" expanded="true" />
-            <element signature="e#1926#1932#0" expanded="true" />
+            <element signature="e#612#619#0" expanded="true" />
+            <element signature="e#671#677#0" expanded="true" />
             <element signature="e#6788#6789#0" expanded="true" />
             <element signature="e#6825#6826#0" expanded="true" />
             <element signature="e#6372#6373#0" expanded="true" />
