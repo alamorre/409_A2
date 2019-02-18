@@ -55,6 +55,8 @@ public class q2 {
         int flips = 0;
         do {
             isNotOptimal = false;
+            ArrayList<Edge> removeArr = new ArrayList<Edge>();
+            ArrayList<Edge> flipArr = new ArrayList<Edge>();
             for(Edge e : edges){
                 // 1. Do p and q share 2 common points (a and b)
                 ArrayList<Point[]> twoPointPairs = shareTwoPoints(e);
@@ -70,17 +72,22 @@ public class q2 {
                         }
                         if(check == 1){
                             if(getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q) > 180.0){
-                                edges.remove(edgePQ);
-                                edges.add(edgeAB);
+                                removeArr.add(edgePQ);
+                                flipArr.add(edgeAB);
                                 flips++;
-                                System.out.println(edgeAB.toString());
-                                System.out.println("-------------");
                             }else{
                                 System.out.println(getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q));
                             }
                         }
                     }
                 }
+            }
+            // Remove the edges captures in Delaunay
+            for(Edge r : removeArr){
+                edges.remove(r);
+            }
+            for(Edge f : flipArr){
+                edges.add(f);
             }
         } while(isNotOptimal);
         return flips;
