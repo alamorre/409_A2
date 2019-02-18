@@ -52,12 +52,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="6204" />
+          <entry key="java" value="6406" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="6204" />
+          <entry key="JAVA" value="6406" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -86,19 +86,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ca/mcgill/ecse409/a2/q2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="55" column="5" lean-forward="true" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
+            <state relative-caret-position="327">
+              <caret line="125" column="12" selection-start-line="125" selection-start-column="12" selection-end-line="125" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#233#239#0" expanded="true" />
-                <element signature="e#612#619#0" expanded="true" />
-                <element signature="e#671#677#0" expanded="true" />
+                <element signature="e#363#369#0" expanded="true" />
+                <element signature="e#742#749#0" expanded="true" />
+                <element signature="e#801#807#0" expanded="true" />
                 <element signature="e#6788#6789#0" expanded="true" />
                 <element signature="e#6825#6826#0" expanded="true" />
                 <element signature="e#6372#6373#0" expanded="true" />
                 <element signature="e#6418#6419#0" expanded="true" />
                 <element signature="e#7985#7986#0" expanded="true" />
                 <element signature="e#8031#8032#0" expanded="true" />
+                <element signature="e#7214#7215#0" expanded="true" />
+                <element signature="e#7250#7251#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -126,10 +128,8 @@
       <find>224575488195071,0.34725406334296527),(0.7675544925929538,0.25860307736</find>
       <find>t</find>
       <find>threa</find>
-      <find>delaunayFlip</find>
       <find>0.0,0.0),(1.0,1.0</find>
       <find>same</find>
-      <find>main</find>
       <find>&lt;(0.0,1.0),(0.7260408048065448,0.5654782156131742)&gt;</find>
       <find>do {</find>
       <find>do</find>
@@ -137,6 +137,8 @@
       <find>0,0.0),(0.7260408048065448,0.56547</find>
       <find>r.</find>
       <find>0.0,0.0),(0.9591295702429053,0.3426516316917194</find>
+      <find>delaunayFlip</find>
+      <find>main</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -243,7 +245,7 @@
   <component name="RunManager">
     <configuration name="q2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ca.mcgill.ecse409.a2.q2" />
-      <option name="PROGRAM_PARAMETERS" value="7 1 91" />
+      <option name="PROGRAM_PARAMETERS" value="7 3 91" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="ca.mcgill.ecse409.a2.*" />
@@ -331,19 +333,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ca/mcgill/ecse409/a2/q2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="55" column="5" lean-forward="true" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
+        <state relative-caret-position="327">
+          <caret line="125" column="12" selection-start-line="125" selection-start-column="12" selection-end-line="125" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#233#239#0" expanded="true" />
-            <element signature="e#612#619#0" expanded="true" />
-            <element signature="e#671#677#0" expanded="true" />
+            <element signature="e#363#369#0" expanded="true" />
+            <element signature="e#742#749#0" expanded="true" />
+            <element signature="e#801#807#0" expanded="true" />
             <element signature="e#6788#6789#0" expanded="true" />
             <element signature="e#6825#6826#0" expanded="true" />
             <element signature="e#6372#6373#0" expanded="true" />
             <element signature="e#6418#6419#0" expanded="true" />
             <element signature="e#7985#7986#0" expanded="true" />
             <element signature="e#8031#8032#0" expanded="true" />
+            <element signature="e#7214#7215#0" expanded="true" />
+            <element signature="e#7250#7251#0" expanded="true" />
           </folding>
         </state>
       </provider>

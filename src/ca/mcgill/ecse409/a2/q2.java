@@ -2,10 +2,14 @@ package ca.mcgill.ecse409.a2;
 
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class q2 {
 
     public static int n,t; // constants
+    public static Flips flips = new Flips(0);
     public static Point[] points;
     public static ArrayList<Edge> edges = new ArrayList<Edge>();
 
@@ -53,53 +57,6 @@ public class q2 {
         }else{
             return Math.abs(angle1-angle2);
         }
-    }
-
-    public static int delaunayFlip(Point[] points, ArrayList<Edge> edges){
-        boolean isNotOptimal;
-        int flips = 0;
-        do {
-            isNotOptimal = false;
-            for(int i = 0; i < edges.size(); i++){
-                Edge e = edges.get(i);
-                synchronized(e) {
-                    // 1. Do p and q share 2 common points (a and b)
-                    ArrayList<Edge> twoPointEdges = sharePointEdges(e);
-                    if (twoPointEdges.size() > 0) {
-                        // 2. Does edge a-b intersect p-q
-                        for (Edge edgeAB : twoPointEdges) {
-                            Edge edgePQ = null;
-                            int check = 0;
-                            for (int j = 0; j < edges.size(); j++) {
-                                Edge checkEdge = edges.get(j);
-                                synchronized (checkEdge){
-                                    if (checkEdge.compare(edgeAB)) {
-                                        check += 2;
-                                    }
-                                    if (checkEdge.intersects(edgeAB)) {
-                                        if (checkEdge.compare(e)) {
-                                            edgePQ = checkEdge;
-                                            check += 1;
-                                        } else {
-                                            check += 2;
-                                        }
-                                    }
-                                }
-                            }
-                            if (check == 1) {
-                                if (getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q) > 180.0) {
-                                    edgePQ.p.removeEdge(edgePQ); edgePQ.q.removeEdge(edgePQ); edges.remove(edgePQ);
-                                    edgeAB.p.addEdge(edgeAB); edgeAB.q.addEdge(edgeAB); edges.add(edgeAB);
-                                    flips++;
-                                    isNotOptimal = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } while(isNotOptimal);
-        return flips;
     }
 
     public static void main(String[] args) {
@@ -154,13 +111,37 @@ public class q2 {
             System.out.println("Triangulated: "+n+" points, "+edges.size()+" edges");
 
             // Now your code is required!
-            int flips = delaunayFlip(points, edges);
-            System.out.println("Flips: " + flips);
+            ExecutorService executor = Executors.newFixedThreadPool(t);
+            for(int i = 0; i < t; i++){
+                executor.execute(new Delaunay(i));
+            }
+            executor.shutdown();
+            try {
+                executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+                System.out.println("Flips: " + flips.printString());
+            } catch (InterruptedException e) {
+                System.out.println("ERROR " +e);
+                e.printStackTrace();
+            }
 
         } catch (Exception e) {
             System.out.println("ERROR " +e);
             e.printStackTrace();
         }
+    }
+
+    /**
+     * This is the synchronized class for flips
+     * */
+    public static class Flips {
+        int flips;
+
+        public Flips(int flips) { flips = flips; }
+
+        public synchronized void plus(){ flips = flips + 1; }
+
+        public synchronized String printString(){ return Integer.toString(flips); }
+
     }
 
     public static class Point {
@@ -237,6 +218,68 @@ public class q2 {
 
         public String toString() {
             return "<"+p+","+q+">";
+        }
+    }
+
+    /**
+     * This is the Delaunay class
+     * */
+    public static class Delaunay implements Runnable {
+        int id;
+
+        public Delaunay(int id) {
+            this.id = id;
+        }
+
+        @Override
+        public void run() {
+            try {
+                boolean isNotOptimal;
+                do {
+                    isNotOptimal = false;
+                    for (int i = 0; i < edges.size(); i++) {
+                        Edge e = edges.get(i);
+                        // 1. Do p and q share 2 common points (a and b)
+                        ArrayList<Edge> twoPointEdges = sharePointEdges(e);
+                        if (twoPointEdges.size() > 0) {
+                            // 2. Does edge a-b intersect p-q
+                            for (Edge edgeAB : twoPointEdges) {
+                                Edge edgePQ = null;
+                                int check = 0;
+                                for (int j = 0; j < edges.size(); j++) {
+                                    Edge checkEdge = edges.get(j);
+                                    if (checkEdge.compare(edgeAB)) {
+                                        check += 2;
+                                    }
+                                    if (checkEdge.intersects(edgeAB)) {
+                                        if (checkEdge.compare(e)) {
+                                            edgePQ = checkEdge;
+                                            check += 1;
+                                        } else {
+                                            check += 2;
+                                        }
+                                    }
+                                }
+                                if (check == 1) {
+                                    if (getAngle(edgePQ.p, edgeAB.p, edgePQ.q) + getAngle(edgePQ.p, edgeAB.q, edgePQ.q) > 180.0) {
+                                        edgePQ.p.removeEdge(edgePQ);
+                                        edgePQ.q.removeEdge(edgePQ);
+                                        edges.remove(edgePQ);
+                                        edgeAB.p.addEdge(edgeAB);
+                                        edgeAB.q.addEdge(edgeAB);
+                                        edges.add(edgeAB);
+                                        flips.plus();
+                                        isNotOptimal = true;
+                                        System.out.println("flip");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } while (isNotOptimal);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 }
